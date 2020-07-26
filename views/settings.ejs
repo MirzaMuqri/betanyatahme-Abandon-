@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Betanyatah &bullet; Notifications</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/phone-mode.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/barba.js/1.0.0/barba.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <script src="js/post-func.js"></script>
+</head>
+
+<body>
+
+    <div class="phone-mode">
+        <div id="barba-wrapper">
+
+            <!-- TRANSITIONS CHANGE -->
+            <div class="barba-container search">
+
+                <!-- MODAL -->
+                <div class="modal" id="modal">
+                    <div class="modal-content">
+                        <p id="modal-message"></p>
+                        <button class="modal-close" id="modal-close" onclick="removeModal();">Close</button>
+                    </div>
+                </div>
+                <!-- MODAL END-->
+
+                <!-- HEADER NAV -->
+                <div class="nav-header">
+                    <p>Settings</p>
+                </div>
+                <!-- HEADER NAV END-->
+
+                <!-- CONTENT START -->
+                <div class="content">
+
+                    <!-- Settings -->
+                    <div class="settings">
+
+                        <div class="settings-column">
+                            <h3 class="header"><i class="fas fa-user"></i> Change Username</h3>
+                            <input type="text" name="username" id="username" placeholder="@Username"
+                                value="<%= username %>">
+                            <br>
+                            <button class="btn-submit" onclick="editUsername(); return false;">Save Username</button>
+                        </div>
+
+                        <div class="settings-column">
+                            <h3 class="header"><i class="fas fa-key"></i> Change Password</h3>
+                            <input type="password" name="password" id="password" placeholder="Password">
+                            <br>
+                            <input type="password" name="repassword" id="repassword" placeholder="Re-Type Password">
+                            <br>
+                            <button class="btn-submit" onclick="editPassword(); return false;">Change Password</button>
+                        </div>
+
+                        <div class="settings-column">
+                            <h3 class="header"><i class="fas fa-envelope"></i> Change Email</h3>
+                            <form action="#" method="post">
+                                <input type="email" name="email" id="email" placeholder="yourcool@email.com"
+                                    value="<%= email %>">
+                                <br>
+                                <button class="btn-submit" onclick="editEmail(); return false;">Change Email</button>
+                            </form>
+                        </div>
+
+                        <div class="settings-column">
+                            <h3 class="header"><i class="fas fa-image"></i> Change Profile Picture</h3>
+                            <form action="/settings/newimg" method="POST" enctype="multipart/form-data">
+                                <label class="custom-file">
+                                    <input type="file" accept="image/jpeg,image/x-png" name="photo" id="photo">
+                                    <i class="fa fa-camera"></i> Select Image
+                                </label>
+                                <br>
+                                <button class="btn-submit">Change Profile Picture</button>
+                            </form>
+                        </div>
+
+                        <div class="settings-column">
+                            <h3 class="header"><i class="fas fa-question"></i> Others</h3>
+                            <button class="btn-submit" onclick="logout();">Log Out</button>
+                        </div>
+
+                    </div>
+                    <!-- Settings End-->
+
+                </div>
+                <!-- CONTENT END-->
+
+                <!-- STICKY NAV -->
+                <div class="sticky-bottom-nav">
+                    <div class="column">
+                        <a href="/"><i class="fas fa-home"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/notification"><i class="fas fa-bell"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/search"><i class="far fa-question-circle"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/u/<%= username %>""><i class=" fas fa-user"></i></a>
+                    </div>
+                    <div class="column">
+                        <a id="active" href="#"><i class="fas fa-cogs"></i></a>
+                    </div>
+                </div>
+                <!-- STICKY NAV END-->
+
+            </div>
+            <!-- TRANSITIONS CHANGE END-->
+
+        </div>
+    </div>
+
+    <script src="js/barba.js"></script>
+</body>
+
+</html>

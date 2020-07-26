@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Betanyatah &bullet; <%= user_data.user_name %></title>
+    <base href="/">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/phone-mode.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/barba.js/1.0.0/barba.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <script src="js/post-func.js"></script>
+</head>
+
+<body>
+
+    <div class="phone-mode">
+        <div id="barba-wrapper">
+
+            <!-- TRANSITIONS CHANGE -->
+            <div class="barba-container profile">
+
+                <!-- MODAL -->
+                <div class="modal" id="modal">
+                    <div class="modal-content">
+                        <p id="modal-message"></p>
+                        <button class="modal-close" id="modal-close" onclick="removeModal();">Close</button>
+                    </div>
+                </div>
+                <!-- MODAL END-->
+
+                <!-- HEADER NAV -->
+                <% if (user_data.user_name.toLowerCase() == "mukri") { %>
+                    <div class="nav-header" style="animation: colorchange 20s infinite; -webkit-animation: colorchange 50s infinite;">
+                <% } else { %>
+                    <div class="nav-header">
+                <% } %>
+                    <p>Betanyatah!?</p>
+                </div>
+                <!-- HEADER NAV END-->
+
+                <!-- Content -->
+                <div class="content">
+                    <!-- User Profile -->
+                    <% if (user_data.user_name.toLowerCase() == "mukri") { %>
+                        <div class="user-profile" style="animation: colorchange 20s infinite; -webkit-animation: colorchange 50s infinite;">
+                    <% } else { %>
+                        <div class="user-profile">
+                    <% } %>
+
+                        <div class="user-profile-pic-wrapper">
+                            <img src="../img/profile-pic/<%= user_data.user_profilepic %>" alt="#" />
+                        </div>
+
+                        <div class="user-name">
+                            <p><%= user_data.user_name %>
+                                <% if (user_data.user_verified == 1) { %>
+                                    <i class="fas fa-question-circle"></i>
+                                <% } %>
+                            </p>
+                        </div>
+
+                        <div class="user-stats">
+                            <div class="column">
+                                <h3><%= user_data.user_questions %></h3>
+                                <p>Questions</p>
+                            </div>
+                            <div class="column">
+                                <h3><%= user_data.user_stars %></h3>
+                                <p>Stars</p>
+                            </div>
+                            <div class="column">
+                                <h3><%= user_data.user_answer %></h3>
+                                <p>Answers</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- User Profile End-->
+
+                    <% if (isUser == false) { %>
+                    <!-- Question Box-->
+                    <div class="question-box">
+                        <form action="#" method="post">
+                            <textarea name="questions" id="questions" rows="5" maxlength="200" placeholder="Betanya tah..."></textarea>
+                            <button class="btn-submit" onclick="askQuestions('<%= user_data.user_name %>'); return false;"><i
+                                    class="fas fa-question-circle"></i> Ask</button>
+                        </form>
+                    </div>
+                    <!-- Question Box End-->
+                    <% } %>
+
+                    <!-- User Questions -->
+                    <div class="user-questions">
+
+                        <h3 class="header"><i class="fas fa-bell"></i> <%= user_data.user_name %>'s Question</h3>
+
+                        <% if (userQ.length == 0) { %>
+                            <div class="user-questions-box">
+                                <p class="header"><i class="fas fa-user-circle"></i> ???????</p>
+                                <p class="date"><i class="fas fa-calendar"></i> 00/00/0000, 00:00 AM</p>
+                                <p class="questions">You don't have any questions.</p>
+    
+                                <a class="btn-small questions-reply" href="#"><i class="fas fa-envelope"></i></a>
+                                <button class="btn-small star"><i class="fas fa-star"></i></button>
+                                <button class="btn-small trash"><i class="fas fa-trash"></i></button>
+                            </div>
+                        <% } else { %>
+                        <%    userQ.forEach( (userq) => { %>
+                            <div class="user-questions-box">
+                                <p class="header"><i class="fas fa-user-circle"></i> ???????</p>
+                                <p class="date"><i class="fas fa-calendar"></i> <%= moment(parseInt(userq.q_time)).format('DD/MM/YYYY , hh:mm A') %></p>
+                                <p class="questions">"<%= userq.q_questions %>"</p>
+
+                                <a class="btn-small questions-reply" href="/u/<%= user_data.user_name %>/q/<%= userq.q_id %>"><i class="fas fa-envelope"></i></a>
+                                <button class="btn-small star" onclick="starQuestions(<%= userq.q_id %>, '<%= user_data.user_name %>')"><i class="fas fa-star"></i></button>
+
+                                <% if (isUser) { %>
+                                <button class="btn-small trash" onclick="showDeleteModal(<%= userq.q_id %>, '<%= user_data.user_name %>')"><i class="fas fa-trash"></i></button>
+                                <% } %>
+
+                            </div>
+                        <%    }); %>
+                        <% } %>
+
+                    </div>
+                    <!-- User Questions End-->
+
+                </div>
+                <!-- Content End -->
+
+                <!-- STICKY NAV -->
+                <div class="sticky-bottom-nav">
+                    <div class="column">
+                        <a href="/"><i class="fas fa-home"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/notification"><i class="fas fa-bell"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/search"><i class="far fa-question-circle"></i></a>
+                    </div>
+                    <div class="column">
+                        <a id="active" href="/u/<%= username %>"><i class="fas fa-user"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/settings"><i class="fas fa-cogs"></i></a>
+                    </div>
+                </div>
+                <!-- STICKY NAV END-->
+
+            </div>
+            <!-- TRANSITIONS CHANGE END-->
+
+        </div>
+    </div>
+
+    <script src="js/barba.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Betanyatah &bullet; <%= info.user_name %></title>
+    <base href="/">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/phone-mode.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/barba.js/1.0.0/barba.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <script src="js/post-func.js"></script>
+</head>
+
+<body>
+
+    <div class="phone-mode">
+        <div id="barba-wrapper">
+
+            <!-- TRANSITIONS CHANGE -->
+            <div class="barba-container profile">
+
+                <!-- MODAL -->
+                <div class="modal" id="modal">
+                    <div class="modal-content">
+                        <p id="modal-message"></p>
+                        <button class="modal-close" id="modal-close" onclick="removeModal();">Close</button>
+                    </div>
+                </div>
+                <!-- MODAL END-->
+
+                <!-- HEADER NAV -->
+                <div class="nav-header">
+                    <p>Betanyatah!?</p>
+                </div>
+                <!-- HEADER NAV END-->
+
+                <!-- Content -->
+                <div class="content" style="margin-bottom: 50px;">
+                    <!-- User Profile -->
+                    <div class="user-profile">
+                        <div class="user-profile-pic-wrapper">
+                            <img src="../../../img/profile-pic/<%= info.user_profilepic %>" alt="#" />
+                        </div>
+
+                        <div class="user-name">
+                            <p><%= info.user_name %> Says:</p>
+                        </div>
+
+                        <p class="user-answer">
+                            <% if (ans.length == 0) { %>
+                            <%= info.user_name %> hasn't respond yet.
+                            <% } else { %>
+                            " <%= ans.ans_answer %> "
+                            <% } %>
+                        </p>
+
+                    </div>
+                    <!-- User Profile End-->
+
+                    <!-- User Questions -->
+                    <div class="user-questions">
+
+                        <h3 class="header"><i class="fas fa-question"></i> A-Non's Question</h3>
+
+                        <div class="user-questions-box" style="margin-bottom: 0px;">
+                            <p class="header"><i class="fas fa-user-circle"></i> ???????</p>
+                            <p class="date"><i class="fas fa-calendar"></i>
+                                <%= moment(parseInt(info.q_time)).format('DD/MM/YYYY , hh:mm A') %></p>
+                            <p class="questions">"<%= info.q_questions %>"</p>
+
+                            <a class="btn-small" href="/u/<%= info.user_name %>"><i class="fas fa-backspace"></i>
+                                Back</a>
+                            <button class="btn-small star"
+                                onclick="starQuestions(<%= info.q_id %>, '<%= info.user_name %>')"><i
+                                    class="fas fa-star"></i></button>
+
+                            <% if (isUser) { %>
+                            <button class="btn-small trash"
+                                onclick="showDeleteModal(<%= info.q_id %>, '<%= info.user_name %>')"><i
+                                    class="fas fa-trash"></i></button>
+                            <% } %>
+                        </div>
+
+                    </div>
+                    <!-- User Questions End-->
+
+                    <% if (isUser) { %>
+                    <%    if (ans.length == 0) { %>
+                    <!-- Answer Box-->
+                    <div class="question-box">
+                        <form action="#" method="post">
+                            <textarea name="questions" id="questions" maxlength="400" rows="5"
+                                placeholder="Jawab tah..."></textarea>
+                            <button class="btn-submit"
+                                onclick="addAnswer(<%= info.q_id%>, '<%= info.user_name %>'); return false;"><i
+                                    class="fas fa-question-circle"></i> Answer</button>
+                        </form>
+                    </div>
+                    <!-- Answer Box End-->
+                    <%    } else {%>
+
+                    <div class="edit-btn">
+                        <h3 class="header"><i class="fas fa-question"></i> Answer Settings</h3>
+                        <button class="btn-settings trash"
+                            onclick="deleteAnswer(<%= info.q_id%>, '<%= info.user_name %>');"><i
+                                class="fas fa-trash"></i></button>
+                    </div>
+
+                    <%    } %>
+                    <% } %>
+
+                </div>
+                <!-- Content End -->
+
+                <!-- STICKY NAV -->
+                <div class="sticky-bottom-nav">
+                    <div class="column">
+                        <a href="/"><i class="fas fa-home"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/notification"><i class="fas fa-bell"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/search"><i class="far fa-question-circle"></i></a>
+                    </div>
+                    <div class="column">
+                        <a id="active" href="/u/<%= username %>"><i class="fas fa-user"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/settings"><i class="fas fa-cogs"></i></a>
+                    </div>
+                </div>
+                <!-- STICKY NAV END-->
+
+            </div>
+            <!-- TRANSITIONS CHANGE END-->
+
+        </div>
+    </div>
+
+    <script src="js/barba.js"></script>
+</body>
+
+</html>

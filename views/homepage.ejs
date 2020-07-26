@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Betanyatah &bullet; Homepage</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/phone-mode.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script
+        type="text/javascript"> (function () { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/barba.js/1.0.0/barba.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <script src="js/post-func.js"></script>
+</head>
+
+<body>
+
+    <div class="phone-mode">
+        <div id="barba-wrapper">
+
+            <!-- TRANSITIONS CHANGE -->
+            <div class="barba-container homepage">
+
+                <!-- HEADER NAV -->
+                <div class="nav-header">
+                    <p>Betanyatah!?</p>
+                </div>
+                <!-- HEADER NAV END-->
+
+                <!-- CONTENT START -->
+                <div class="content">
+
+                    <!-- User Profile -->
+                    <div class="user-profile">
+
+                        <div class="user-profile-pic-wrapper">
+                            <img src="img/profile-pic/<%= user_data.user_profilepic %>" alt="#" />
+                        </div>
+
+                        <div class="user-name">
+                            <p><%= user_data.user_name %>
+                                <% if (user_data.user_verified == 1) { %>
+                                <i class="fas fa-question-circle"></i>
+                                <% } %>
+                            </p>
+                        </div>
+
+                        <div class="user-stats">
+                            <div class="column">
+                                <h3><%= user_data.user_questions %></h3>
+                                <p>Questions</p>
+                            </div>
+                            <div class="column">
+                                <h3><%= user_data.user_stars %></h3>
+                                <p>Stars</p>
+                            </div>
+                            <div class="column">
+                                <h3><%= user_data.user_answer %></h3>
+                                <p>Answers</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- User Profile End-->
+
+                    <!-- Notifications -->
+                    <div class="notifications">
+                        <h3 class="header"><i class="fas fa-bell"></i> Notifications</h3>
+
+                        <% if (bell.length == 0) { %>
+                        <div class="notifications-container">
+                            <a href="#">
+                                <div class="notifications-pic">
+                                    <div class="pic"
+                                        style="background-image: url('./img/bell.png'); background-color: #255fe3;">
+
+                                    </div>
+                                </div>
+                                <div class="notifications-content">
+                                    <div class="content">
+                                        <p class="not-type">You don't have any notifications.</p>
+                                        <p class="date"><i class="fas fa-calendar-alt"></i> 00/00/000, 00:00PM</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="notifications-container">
+                            <a href="#">
+                                <div class="notifications-pic">
+                                    <div class="pic"
+                                        style="background-image: url('./img/bell.png'); background-color: #03A9F4;">
+
+                                    </div>
+                                </div>
+                                <div class="notifications-content">
+                                    <div class="content">
+                                        <p class="not-type">You don't have any notifications.</p>
+                                        <p class="date"><i class="fas fa-calendar-alt"></i> 00/00/000, 00:00PM</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="notifications-container">
+                            <a href="#">
+                                <div class="notifications-pic">
+                                    <div class="pic"
+                                        style="background-image: url('./img/bell.png'); background-color: #2196F3;">
+
+                                    </div>
+                                </div>
+                                <div class="notifications-content">
+                                    <div class="content">
+                                        <p class="not-type">You don't have any notifications.</p>
+                                        <p class="date"><i class="fas fa-calendar-alt"></i> 00/00/000, 00:00PM</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <% } else { %>
+                        <%    bell.forEach( (bell) => { %>
+
+                        <%    if (bell.bell_type == 0) { %>
+                        <div class="notifications-container">
+                            <a href="/u/<%= user_data.user_name %>/q/<%= bell.q_id %>">
+                                <div class="notifications-pic">
+                                    <div class="pic"
+                                        style="background-image: url('./img/bell.png'); background-color: #FFC107;">
+
+                                    </div>
+                                </div>
+                                <div class="notifications-content">
+                                    <div class="content">
+                                        <p class="not-type">A-Non gave you a star.</p>
+                                        <p class="date"><i class="fas fa-calendar-alt"></i>
+                                            <%= moment(parseInt(bell.bell_time)).format('DD/MM/YYYY , hh:mm A') %></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <%    } else if (bell.bell_type == 1) { %>
+                        <div class="notifications-container">
+                            <a href="/u/<%= user_data.user_name %>/q/<%= bell.q_id %>">
+                                <div class="notifications-pic">
+                                    <div class="pic"
+                                        style="background-image: url('./img/bell.png'); background-color: #03A9F4;">
+
+                                    </div>
+                                </div>
+                                <div class="notifications-content">
+                                    <div class="content">
+                                        <p class="not-type">A-Non asked you a question.</p>
+                                        <p class="date"><i class="fas fa-calendar-alt"></i>
+                                            <%= moment(parseInt(bell.bell_time)).format('DD/MM/YYYY , hh:mm A') %></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <%    } %>
+
+                        <%    }); %>
+                        <% } %>
+
+                    </div>
+                    <!-- Notifications End-->
+
+                    <!-- Discover -->
+                    <div class="discover">
+                        <h3 class="header"><i class="fas fa-globe-asia"></i> Discover</h3>
+
+                        <div class="column">
+                            <a href="/random-user">
+                                <div class="container-in random-user">
+                                    <h1><i class="fas fa-users"></i></h1>
+                                    <p>Random <br> User</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="column">
+                            <a href="/random-question">
+                                <div class="container-in random-question">
+                                    <h1><i class="fas fa-question"></i></h1>
+                                    <p>Random <br> Questions</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="column">
+                            <a href="/search">
+                                <div class="container-in search-user">
+                                    <h1><i class="fas fa-search"></i></h1>
+                                    <p>Search <br> User</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Discover End-->
+
+                </div>
+                <!-- CONTENT END-->
+
+                <!-- STICKY NAV -->
+                <div class="sticky-bottom-nav">
+                    <div class="column">
+                        <a id="active" href="/"><i class="fas fa-home"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/notification"><i class="fas fa-bell"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/search"><i class="far fa-question-circle"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/u/<%= user_data.user_name %>"><i class="fas fa-user"></i></a>
+                    </div>
+                    <div class="column">
+                        <a href="/settings"><i class="fas fa-cogs"></i></a>
+                    </div>
+                </div>
+                <!-- STICKY NAV END-->
+
+            </div>
+            <!-- TRANSITIONS CHANGE END-->
+
+        </div>
+    </div>
+
+    <script src="js/barba.js"></script>
+</body>
+
+</html>
